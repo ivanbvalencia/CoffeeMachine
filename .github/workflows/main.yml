@@ -26,5 +26,5 @@ jobs:
         run: dotnet build ./CoffeeMachine.sln --configuration release --no-restore
 
       - name: Publish
-        run: dotnet publish ./CoffeeMachine --configuration release --no-build
+        run: dotnet publish ./CoffeeMachine.sln --configuration release --no-build
         
