@@ -17,14 +17,8 @@ builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
 
 var app = builder.Build();
-
+ 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-}
 
 app.MapGet("/brew-coffee", async (ICoffeeService service) =>
 {
