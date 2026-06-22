@@ -23,13 +23,13 @@ jobs:
             dotnet-version: 8.0.x
             
       - name: Restore
-        run: dotnet restore ./CoffeeMachine.sln
+        run: dotnet restore ./CoffeeMachine/CoffeeMachine.csproj
 
       - name: Build
-        run: dotnet build ./CoffeeMachine.sln --configuration release --no-restore
+        run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-restore
 
       - name: Publish
-        run: dotnet publish ./CoffeeMachine.sln --configuration release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        run: dotnet publish ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         
       - name: Deployment
         uses: azure/webapps-deploy@v2
