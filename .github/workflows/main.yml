@@ -20,11 +20,11 @@ jobs:
             dotnet-version: 8.0.x
             
       - name: Restore
-        run: dotnet restore ./CoffeMachine.sln
+        run: dotnet restore ./CoffeeMachine.sln
 
       - name: Build
-        run: dotnet build ./CoffeMachine.sln --configuration release --no-restore
+        run: dotnet build ./CoffeeMachine.sln --configuration release --no-restore
 
       - name: Publish
-        run: dotnet publish ./CoffeMachine --configuration release --no-build
+        run: dotnet publish ./CoffeeMachine --configuration release --no-build
         
