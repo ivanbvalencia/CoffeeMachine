@@ -20,6 +20,9 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 app.MapGet("/brew-coffee", async (ICoffeeService service) =>
 {
     return await service.BrewCoffeeAsync();
