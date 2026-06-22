@@ -1,0 +1,39 @@
+name: Publish
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - Prod
+
+env:
+  AZURE_WEBAPP_NAME: Coffee-Machine-Service
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: 8.0.x
+            
+      - name: Restore
+        run: dotnet restore ./CoffeeMachine/CoffeeMachine.csproj
+
+      - name: Build
+        run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        
+      - name: Deployment
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
