@@ -28,7 +28,7 @@ namespace CoffeeMachine.Services.Implementation
             {
                 return Results.StatusCode(503);
             }
-            var message = "Your piping hot coffee is ready";
+            var message = "Your piping hot coffee is ready';
 
             // Extra credit
             var temperature = await _weatherService.GetCurrentTemperatureAsync();
