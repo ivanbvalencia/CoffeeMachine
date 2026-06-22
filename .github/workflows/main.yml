@@ -9,7 +9,6 @@ on:
 env:
   AZURE_WEBAPP_NAME: Coffee-Machine-Service
   AZURE_WEBAPP_PACKAGE_PATH: "./publish"
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   publish:
