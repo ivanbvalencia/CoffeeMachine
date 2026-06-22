@@ -26,10 +26,15 @@ jobs:
         run: dotnet restore ./CoffeeMachine/CoffeeMachine.csproj
 
       - name: Build
-        run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-restore
+        run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./CoffeeMachine/CoffeeMachine.csproj --configuration release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+        run: dotnet publish ./CoffeeMachine/CoffeeMachine.csproj --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
+
+      - name: Verify publish output
+        run: |
+          echo "Publish folder contents:"
+          ls -R ./publish
         
       - name: Deployment
         uses: azure/webapps-deploy@v2
