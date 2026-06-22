@@ -1,0 +1,30 @@
+name: Publish
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - Prod
+
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: 8.0.x
+            
+      - name: Restore
+        run: dotnet restore ./CoffeMachine.sln
+
+      - name: Build
+        run: dotnet build ./CoffeMachine.sln --configuration release --no-restore
+
+      - name: Publish
+        run: dotnet publish ./CoffeMachine --configuration release --no-build
+        
