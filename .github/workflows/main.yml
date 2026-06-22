@@ -6,6 +6,9 @@ on:
     branches:
       - Prod
 
+env:
+  AZURE_WEBAPP_NAME: Coffee-Machine-Service
+  AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
   publish:
@@ -26,5 +29,11 @@ jobs:
         run: dotnet build ./CoffeeMachine.sln --configuration release --no-restore
 
       - name: Publish
-        run: dotnet publish ./CoffeeMachine.sln --configuration release --no-build
+        run: dotnet publish ./CoffeeMachine.sln --configuration release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
         
+      - name: Deployment
+        uses: actions/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
