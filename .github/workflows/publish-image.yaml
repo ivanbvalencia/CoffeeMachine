@@ -1,0 +1,19 @@
+name: Publish image to docker Hub
+on: 
+  [workflow_dispatch]
+
+jobs:
+  publish_image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: build
+        run: |
+          docker build . -t ivanexequiel/coffee-machine-hub:latest
+
+      - name: publish
+        run: |
+          docker login -u ivanexequiel -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push ivanexequiel/coffee-machine-hub:latest
