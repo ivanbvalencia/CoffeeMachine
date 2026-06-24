@@ -11,7 +11,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: "./publish"
 
 jobs:
-  publish:
+  build-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,17 +28,18 @@ jobs:
       - name: Build
         run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration Release --no-restore
 
-      - name: Publish
-        run: dotnet publish ./CoffeeMachine/CoffeeMachine.csproj --configuration Release --no-build --output '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
-
-      - name: Verify publish output
+      - name: Test
         run: |
-          echo "Publish folder contents:"
-          ls -R ./publish
-        
-      - name: Deployment
-        uses: azure/webapps-deploy@v2
+          dotnet test \
+          --configre Release \ 
+          --no build \
+          --collect: "XPlat Code Coverage"
+
+      - name: Publish test results
+        uses: action/upload-artifact@v4
+        if: always()
         with:
-          app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          name: test-results
+          path: '**/TestResults'
+      
+    
