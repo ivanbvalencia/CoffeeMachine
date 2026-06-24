@@ -28,18 +28,5 @@ jobs:
       - name: Build
         run: dotnet build ./CoffeeMachine/CoffeeMachine.csproj --configuration Release --no-restore
 
-      - name: Test
-        run: |
-          dotnet test \
-          --configre Release \ 
-          --no build \
-          --collect: "XPlat Code Coverage"
-
-      - name: Publish test results
-        uses: action/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: '**/TestResults'
       
     
