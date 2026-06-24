@@ -1,10 +1,7 @@
 name: Publish
 
 on: 
-  workflow_dispatch:
-  push:
-    branches:
-      - Prod
+  [workflow_dispatch]
 
 env:
   AZURE_WEBAPP_NAME: Coffee-Machine-Service
